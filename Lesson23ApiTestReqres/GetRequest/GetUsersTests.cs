@@ -16,7 +16,7 @@ public class GetUsersTests
     private const string Api = "/users/";
     private ResponseUsers responseUsers;
 
-    [Test]
+    [OneTimeSetUp]
     
     public async Task Setup()
     {
@@ -32,9 +32,20 @@ public class GetUsersTests
         responseUsers = JsonConvert.DeserializeObject<ResponseUsers>(stringResponse);
         
     }
+    [Test]
     public void CheckNameFromUsersTesting()
     {
-        Assert.AreEqual("Emma", responseUsers.Data[3].First_name, "Поле name в ответе от api не соответствует ожидаемому");
+        Assert.AreEqual("Eve", responseUsers.Data[3].First_name, "Поле name в ответе от api не соответствует ожидаемому");
+    }
+    [Test]
+    public void CheckCountPerPageTesting()
+    {
+        Assert.AreEqual(6, responseUsers.Per_page, "Количество пользователей не совпадает");
+    }
+    [Test]
+    public void CheckEmailNotNullTesting()
+    {
+        Assert.IsNotNull(responseUsers.Data[2].Email, "Электронная почта не указана");
     }
     }
     
